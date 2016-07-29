@@ -476,8 +476,12 @@ function codex_int_contact_address() {
 
 /*-----------------Add Image Size---------------*/
 add_image_size( 'address_section_page', 437, 278, true );
-add_image_size( 'what_we_do_image_sec', 947, 686, true );
+add_image_size( 'what_we_do_image_sec', 944, 686, true );
 add_image_size( 'blog_section_outer', 457, 447, true );
+add_image_size( 'logo_what_we_do', 86, 103, true );
+add_image_size( 'portfolio_section_images_ajax_response', 263, 323, true );
+add_image_size( 'home_page_category_sect', 480, 320, true );
+add_image_size( 'portfolio_product_section', 92, 189, true );
 /*-----------------Add Image Size---------------*/
 
 
@@ -537,3 +541,508 @@ echo paginate_links( array(
 endif;
 
 /******************** /Pagination Function*****************************/
+
+
+
+/*---------------Products----------------*/
+$labels = array(
+'name' => _x( 'Products category', 'Products category' ),
+'singular_name' => _x( 'Products category', 'Products category' ),
+'search_items' => __( 'Search Products category' ),
+'all_items' => __( 'All Products category' ),
+'parent_item' => __( 'Parent Products category' ),
+'parent_item_colon' => __( 'Parent Products category:' ),
+'edit_item' => __( 'Edit Products category' ),
+'update_item' => __( 'Update Products category' ),
+'add_new_item' => __( 'Add New Products category' ),
+'new_item_name' => __( 'New Products category' ),
+'menu_name' => __( 'Products category' ),
+);
+
+$args = array(
+'hierarchical' => true,
+'labels' => $labels,
+'show_ui' => true,
+'show_admin_column' => true,
+'query_var' => true,
+'rewrite' => array( 'slug' => 'products_category' ),
+);
+
+register_taxonomy( 'products_category', array( 'products_category' ), $args );
+function codex_int_products_section() {
+  $labels =array(
+    'name' => 'Products',
+    'singular_name' => 'Products',
+    'add_new' => 'Add Products',
+    'add_new_item' => 'Add New Products',
+    'edit_item' => 'Edit Products',
+    'new_item' => 'New Products',
+    'all_items' => 'All Products',
+    'view_item' => 'View Products',
+    'search_items' => 'Search Products',
+    'not_found' =>  'No Products found',
+    'not_found_in_trash' => 'No Products found in Trash', 
+    'parent_item_colon' => '',
+    'menu_name' => 'Products'
+  );
+
+  $args = array(
+    'labels' => $labels,
+    'public' => true,
+    'publicly_queryable' => true,
+    'show_ui' => true, 
+    'show_in_menu' => true, 
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'products' ), 
+    'capability_type' => 'post',
+    'has_archive' => true, 
+    'hierarchical' => false,
+    'menu_position' => null,
+     'taxonomies' => array('products_category'),
+
+	'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
+	
+  ); 
+
+  register_post_type( 'products', $args ); 
+
+}
+add_action( 'init', 'codex_int_products_section' );
+
+/*---------------/Products----------------*/
+
+/*--------------/Products Meta Box---------------*/
+/**
+ * Adds a box to the main column on the Post and Page edit screens.
+ */
+function myplugin_add_meta_box() {
+
+	$screens = array( 'products' );
+
+	foreach ( $screens as $screen ) {
+
+		add_meta_box(
+			'myplugin_sectionid',
+			__( 'Price Section', 'myplugin_textdomain' ),
+			'myplugin_meta_box_callback',
+			$screen
+		);
+	}
+}
+add_action( 'add_meta_boxes', 'myplugin_add_meta_box' );
+// add_action( 'save_post', 'myplugin_save_meta_box_data');
+/**
+ * Prints the box content.
+ * 
+ * @param WP_Post $post The object for the current post/page.
+ */
+function myplugin_meta_box_callback( $post) {
+
+	// Add an nonce field so we can check for it later.
+	wp_nonce_field( 'myplugin_meta_box', 'myplugin_meta_box_nonce' );
+
+	/*
+	 * Use get_post_meta() to retrieve an existing value
+	 * from the database and use the value for the form.
+	 */
+		$post_id = $post->ID;
+		global $wpdb;
+	 ?>
+	 
+		<link href="<?php echo esc_url( get_template_directory_uri() ); ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<div class="meta-box-section">
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">View All Prices</button>
+		</div>
+		<div id="myModal" class="modal fade" role="dialog">
+			<div class="modal-dialog" style="width:900px !important;">
+			<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Price List</h4>
+					</div>
+					<div class="modal-body table-responsive">
+						<table class="table">
+							<thead>
+							  <tr>
+								<th>Style</th>
+								<th>Doorset/Leaf</th>
+								<th>Thickness</th>
+								<th>whiteprimed</th>
+								<th>crownsapele</th>
+								<th>etimoe</th>
+								<th>oak</th>
+								<th>steamedbeech</th>
+								<th>maple</th>
+								<th>cherry</th>
+								<th>wengue</th>
+								<th>walnut</th>
+								<th>zebrano</th>
+								<th>ebony</th>
+								<th>bleachedoak</th>
+								<th>stonegrey</th>
+								<th>greychoco</th>
+								<th>ashgrey</th>
+								<th>lightchoco</th>
+								<th>rallacquer</th>
+								<th>whitelacquer</th>
+								<th>stainedoak</th>
+								<th>stainedoak-lacquer</th>
+								<th>stainedoak-hg-lacquer</th>
+								<th>hg-matt-lacquer</th>
+								<th>hgloss</th>
+								<th>DoorOnly</th>
+							  </tr>
+							</thead>
+							<tbody>
+							<?php 
+								foreach( $wpdb->get_results("SELECT * FROM `im_products_price_details` WHERE `post_id` = $post_id") as $key => $row)
+								{
+							?>
+							  <tr>
+								<td><?php if($row->style!= ""){echo $row->style;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->doorset_leaf!= ""){echo $row->doorset_leaf;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->thickness!= ""){echo $row->thickness;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->whiteprimed!= ""){echo $row->whiteprimed;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->crownsapele!= ""){echo $row->crownsapele;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->etimoe!= ""){echo $row->etimoe;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->oak!= ""){echo $row->oak;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->steamedbeech!= ""){echo $row->steamedbeech;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->maple!= ""){echo $row->maple;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->cherry!= ""){echo $row->cherry;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->wengue!= ""){echo $row->wengue;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->walnut!= ""){echo $row->walnut;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->zebrano!= ""){echo $row->zebrano;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->ebony!= ""){echo $row->ebony;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->bleachedoak!= ""){echo $row->bleachedoak;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->stonegrey!= ""){echo $row->stonegrey;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->greychoco!= ""){echo $row->greychoco;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->ashgrey!= ""){echo $row->ashgrey;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->lightchoco!= ""){echo $row->lightchoco;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->rallacquer!= ""){echo $row->rallacquer;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->whitelacquer!= ""){echo $row->whitelacquer;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->stainedoak!= ""){echo $row->stainedoak;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->stainedoak-lacquer!= ""){echo $row->stainedoak-lacquer;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->stainedoak-hg-lacquer!= ""){echo $row->stainedoak-hg-lacquer;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->hg-matt-lacquer!= ""){echo $row->hg-matt-lacquer;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->hgloss!= ""){echo $row->hgloss;} else{ echo "Nill";} ?></td>
+								<td><?php if($row->DoorOnly!= ""){echo $row->DoorOnly;} else{ echo "Nill";} ?></td>
+							  </tr>
+							  <?php  
+								}
+								?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	
+    <script type="text/javascript" src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/bootstrap.min.js"></script>
+	<?php
+	
+}
+/**********************************************Meta Box End**************************************/
+/*--------------Case Strudy---------------*/
+function codex_int_case_study() {
+  $labels = array(
+    'name' => 'Case Study',
+    'singular_name' => 'Case Study',
+    'add_new' => 'Add Case Study',
+    'add_new_item' => 'Add New Case Study',
+    'edit_item' => 'Edit Case Study',
+    'new_item' => 'New Case Study',
+    'all_items' => 'All Case Study',
+    'view_item' => 'View Case Study',
+    'search_items' => 'Search Case Study',
+    'not_found' =>  'No Case Study found',
+    'not_found_in_trash' => 'No Case Study found in Trash', 
+    'parent_item_colon' => '',
+    'menu_name' => 'Case Study'
+  );
+
+  $args = array(
+    'labels' => $labels,
+    'public' => true,
+    'publicly_queryable' => true,
+    'show_ui' => true, 
+    'show_in_menu' => true, 
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'case_study' ), 
+    'capability_type' => 'post',
+    'has_archive' => true, 
+    'hierarchical' => false,
+    'menu_position' => null,
+    'supports' => array( 'title', 'editor','thumbnail')
+  ); 
+
+  register_post_type( 'case_study', $args ); 
+}  
+  add_action( 'init', 'codex_int_case_study' );
+/*--------------/Case Strudy----------------*/
+
+/*--------------/Case Study Meta Box---------------*/
+/**
+ * Adds a box to the main column on the Post and Page edit screens.
+ */
+function myplugin_add_case_study_meta_box() {
+
+	$screens = array( 'case_study' );
+
+	foreach ( $screens as $screen ) {
+
+		add_meta_box(
+			'myplugin_sectionid',
+			__( 'Products Envolved', 'myplugin_textdomain' ),
+			'myplugin_meta_box_case_study_callback',
+			$screen
+		);
+	}
+}
+add_action( 'add_meta_boxes', 'myplugin_add_case_study_meta_box' );
+// add_action( 'save_post', 'myplugin_save_meta_box_data');
+/**
+ * Prints the box content.
+ * 
+ * @param WP_Post $post The object for the current post/page.
+ */
+function myplugin_meta_box_case_study_callback( $post) {
+
+	// Add an nonce field so we can check for it later.
+	wp_nonce_field( 'myplugin_meta_box', 'myplugin_meta_box_nonce' );
+
+	/*
+	 * Use get_post_meta() to retrieve an existing value
+	 * from the database and use the value for the form.
+	 */
+		$post_id = $post->ID;
+		global $wpdb;
+	 ?>
+	 
+		<link href="<?php echo esc_url( get_template_directory_uri() ); ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<div class="meta-box-section">
+			<div class="container">
+			<?php 
+			$i=1;
+				foreach( $wpdb->get_results("SELECT * FROM `im_posts` WHERE `post_type` = 'products'") as $key => $row)
+				{
+					?>
+					<div class="col-md-4">
+					<label for="row<?php echo $i; ?>"><?php echo $row->post_title; ?></label>
+					<input name="check_post_id[]" type="checkbox" class="form-class selected_<?php echo $row->ID; ?>" id="row<?php echo $i; ?>" value="<?php echo $row->ID; ?>">
+					</div>
+					<?php
+					$i++;
+				}
+			?>
+			
+			<button type="button" class="btn-primary" onclick="save_results();">Save</button>
+			</div>
+		</div>
+		<?php
+		foreach( $wpdb->get_results("SELECT * FROM `im_case_study` WHERE `case_id` = '".$post_id."'") as $key => $row)
+				{
+					$products_id = $row->product_id;
+					?>
+					<script>
+					jQuery(".selected_<?php echo $products_id;?>").attr('checked', true); 
+					</script>
+					<?php
+				}
+				?>
+	
+    <script type="text/javascript" src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/bootstrap.min.js"></script>
+	<script>
+	function save_results()
+	{
+		var check_post_id = "";
+		var post_id = "<?php echo $post_id; ?>";
+		jQuery.each(jQuery("input[name='check_post_id[]']:checked"), function() {
+		check_post_id += (check_post_id?',':'') + jQuery(this).val();
+			jQuery.ajax({
+			type: "POST",
+			url:"<?php bloginfo('template_url'); ?>/ajax/custom_meta_case.php",
+			data:{check_post_id:check_post_id,post_id:post_id,format:'raw'},
+			success:function(resp){
+				location.reload();
+			}
+			});
+		});
+	}
+	</script>
+	<?php
+	
+}
+/*--------------/Case Study Meta Box---------------*/
+
+
+
+/*---------------Portfolio----------------*/
+$labels = array(
+'name' => _x( 'Portfolio category', 'Portfolio category' ),
+'singular_name' => _x( 'Portfolio category', 'Portfolio category' ),
+'search_items' => __( 'Search Portfolio category' ),
+'all_items' => __( 'All Portfolio category' ),
+'parent_item' => __( 'Parent Portfolio category' ),
+'parent_item_colon' => __( 'Parent Portfolio category:' ),
+'edit_item' => __( 'Edit Portfolio category' ),
+'update_item' => __( 'Update Portfolio category' ),
+'add_new_item' => __( 'Add New Portfolio category' ),
+'new_item_name' => __( 'New Portfolio category' ),
+'menu_name' => __( 'Portfolio category' ),
+);
+
+$args = array(
+'hierarchical' => true,
+'labels' => $labels,
+'show_ui' => true,
+'show_admin_column' => true,
+'query_var' => true,
+'rewrite' => array( 'slug' => 'portfolio_category' ),
+);
+
+register_taxonomy( 'portfolio_category', array( 'portfolio_category' ), $args );
+function codex_int_portfolio_section() {
+  $labels =array(
+    'name' => 'Portfolio',
+    'singular_name' => 'Portfolio',
+    'add_new' => 'Add Portfolio',
+    'add_new_item' => 'Add New Portfolio',
+    'edit_item' => 'Edit Portfolio',
+    'new_item' => 'New Portfolio',
+    'all_items' => 'All Portfolio',
+    'view_item' => 'View Portfolio',
+    'search_items' => 'Search Portfolio',
+    'not_found' =>  'No Portfolio found',
+    'not_found_in_trash' => 'No Portfolio found in Trash', 
+    'parent_item_colon' => '',
+    'menu_name' => 'Portfolio'
+  );
+
+  $args = array(
+    'labels' => $labels,
+    'public' => true,
+    'publicly_queryable' => true,
+    'show_ui' => true, 
+    'show_in_menu' => true, 
+    'query_var' => true,
+    'rewrite' => array( 'slug' => 'Portfolios' ), 
+    'capability_type' => 'post',
+    'has_archive' => true, 
+    'hierarchical' => false,
+    'menu_position' => null,
+     'taxonomies' => array('portfolio_category'),
+
+	'supports' => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'comments' ),
+	
+  ); 
+
+  register_post_type( 'Portfolios', $args ); 
+
+}
+add_action( 'init', 'codex_int_portfolio_section' );
+
+/*---------------/Portfolio----------------*/
+/****************Gallery Section*********************/
+function get_numerics ($str)
+{
+preg_match_all('/\d+/', $str, $matches);
+return $matches[0];
+}
+/****************Gallery Section*********************/
+
+
+/*--------------/Portfolio Meta Box---------------*/
+/**
+ * Adds a box to the main column on the Post and Page edit screens.
+ */
+function myplugin_add_portfolio_meta_box() {
+
+	$screens = array( 'portfolios' );
+
+	foreach ( $screens as $screen ) {
+
+		add_meta_box(
+			'myplugin_sectionid',
+			__( 'Products Envolved', 'myplugin_textdomain' ),
+			'myplugin_meta_box_portfolio_callback',
+			$screen
+		);
+	}
+}
+add_action( 'add_meta_boxes', 'myplugin_add_portfolio_meta_box' );
+// add_action( 'save_post', 'myplugin_save_meta_box_data');
+/**
+ * Prints the box content.
+ * 
+ * @param WP_Post $post The object for the current post/page.
+ */
+function myplugin_meta_box_portfolio_callback( $post) {
+
+	// Add an nonce field so we can check for it later.
+	wp_nonce_field( 'myplugin_meta_box', 'myplugin_meta_box_nonce' );
+
+	/*
+	 * Use get_post_meta() to retrieve an existing value
+	 * from the database and use the value for the form.
+	 */
+		$post_id = $post->ID;
+		global $wpdb;
+	 ?>
+	 
+		<link href="<?php echo esc_url( get_template_directory_uri() ); ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<div class="meta-box-section">
+			<div class="container">
+			<?php 
+			$i=1;
+				foreach( $wpdb->get_results("SELECT * FROM `im_posts` WHERE `post_type` = 'products'") as $key => $row)
+				{
+					?>
+					<div class="col-md-4">
+					<label for="row<?php echo $i; ?>"><?php echo $row->post_title; ?></label>
+					<input name="check_post_id[]" type="checkbox" class="form-class selected_<?php echo $row->ID; ?>" id="row<?php echo $i; ?>" value="<?php echo $row->ID; ?>">
+					</div>
+					<?php
+					$i++;
+				}
+			?>
+			
+			<button type="button" class="btn-primary" onclick="save_results();">Save</button>
+			</div>
+		</div>
+		<?php
+		foreach( $wpdb->get_results("SELECT * FROM `im_portfolio` WHERE `case_id` = '".$post_id."'") as $key => $row)
+				{
+					$products_id = $row->product_id;
+					?>
+					<script>
+					jQuery(".selected_<?php echo $products_id;?>").attr('checked', true); 
+					</script>
+					<?php
+				}
+				?>
+	
+    <script type="text/javascript" src="<?php echo esc_url( get_template_directory_uri() ); ?>/js/bootstrap.min.js"></script>
+	<script>
+	function save_results()
+	{
+		var check_post_id = "";
+		var post_id = "<?php echo $post_id; ?>";
+		jQuery.each(jQuery("input[name='check_post_id[]']:checked"), function() {
+		check_post_id += (check_post_id?',':'') + jQuery(this).val();
+			jQuery.ajax({
+			type: "POST",
+			url:"<?php bloginfo('template_url'); ?>/ajax/custom_meta_portfolio.php",
+			data:{check_post_id:check_post_id,post_id:post_id,format:'raw'},
+			success:function(resp){
+				location.reload();
+			}
+			});
+		});
+	}
+	</script>
+	<?php
+	
+}
+/*--------------/Portfolio Meta Box---------------*/

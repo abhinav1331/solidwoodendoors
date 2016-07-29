@@ -21,6 +21,7 @@
     <link href="<?php echo esc_url( get_template_directory_uri() ); ?>/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo esc_url( get_template_directory_uri() ); ?>/css/animate.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo esc_url( get_template_directory_uri() ); ?>/css/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="http://www.owlcarousel.owlgraphic.com/assets/owlcarousel/assets/owl.carousel.min.css">
 </head>
 <body>
     <div class="main">
@@ -63,28 +64,30 @@
                     </div>
                     <div class="main-menu pull-right">
                         <ul>
-                            <li><a href="">About</a></li>
-                            <li class="menu-item-has-children"><a href="http://swd.stagingdevsite.com/product_category.html">Products</a>
-                                <ul class="sub-menu">
-                                    <li>
-                                        <a href="#">Products 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Products 2</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Products 3</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Products 4</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li><a href="#">Size guide</a></li>
-                            <li><a href="http://swd.stagingdevsite.com/portfolio.html">Portfolio</a></li>
-                            <li><a href="http://swd.stagingdevsite.com/FAQ.html">Faq</a></li>
-                            <li><a href="http://swd.stagingdevsite.com/Blog.html">Blog</a></li>
-                            <li><a href="http://swd.stagingdevsite.com/contact.html">Contact Us</a></li>
+                            < <?php
+
+					$defaults = array(
+						'theme_location'  => '',
+						'menu'            => '',
+						'container'       => 'header_menu',
+						'container_class' => '',
+						'container_id'    => '',
+						'menu_class'      => 'menu',
+						'menu_id'         => '',
+						'echo'            => true,
+						'fallback_cb'     => 'wp_page_menu',
+						'before'          => '',
+						'after'           => '',
+						'link_before'     => '',
+						'link_after'      => '',
+						'items_wrap'      => '%3$s',
+						'depth'           => 0,
+						'walker'          => ''
+					);
+
+					wp_nav_menu( $defaults );
+
+					?>        
                         </ul>
                     </div>
                 </div>

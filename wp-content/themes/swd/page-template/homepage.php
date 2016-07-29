@@ -23,62 +23,50 @@ get_header();
             </div>
         </section>
         <section class="home-4boxs wow fadeInDown">
+		<?php
+		$args = array( 'taxonomy' => 'products_category','hide_empty'=> 0 , 'parent' => 0);
+		$terms = get_terms('products_category', $args);
+		if (count($terms) > 0) {
+			foreach ($terms as $term) 
+			{
+			/*------------------------Attachment by url by addribute size------------------------------------------*/
+			echo $image_id=get_post_meta($term->term_id,"featured_image",true);
+			$thumb = wp_get_attachment_image_src($image_id, 'home_page_category_sect' );
+			$alt = get_post_meta($thumb_id, '_wp_attachment_image_alt', true);
+			$url = $thumb['0'];
+			/*------------------------Attachment by url by addribute size------------------------------------------*/
+				?>
             <div class="home-4box">
-                <a href="#">
-                    <figure><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/home-img1.jpg" alt="" title=""></figure>
+                <a href="<?php echo get_category_link( $term->term_id ); ?>">
+                    <figure>
+					 <?php if ( $url != "" ) 
+					{
+					?>
+					<img src="<?php echo $url; ?>" alt="<?php echo $alt; ?>" class="img_responsive">
+					<?php
+					}
+					else
+					{
+					?>
+					<img src="http://placehold.it/263x323&amp;text=No image found" alt="No Image Found"  class="img_responsive">
+					<?php
+					}?>
+					</figure>
                     <div class="overlay">
                         <div class="display-table">
                             <div class="display-table-cell">
                                 <div class="text">
-                                    <h6>Internal</h6>
+                                    <h6><?php echo $term->name; ?></h6>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="home-4box">
-                <a href="#">
-                    <figure><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/home-img2.jpg" alt="" title=""></figure>
-                    <div class="overlay">
-                        <div class="display-table">
-                            <div class="display-table-cell">
-                                <div class="text">
-                                    <h6>External</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="home-4box">
-                <a href="#">
-                    <figure><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/home-img3.jpg" alt="" title=""></figure>
-                    <div class="overlay">
-                        <div class="display-table">
-                            <div class="display-table-cell">
-                                <div class="text">
-                                    <h6>Ironmongery</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="home-4box">
-                <a href="#">
-                    <figure><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/home-img4.jpg" alt="" title=""></figure>
-                    <div class="overlay">
-                        <div class="display-table">
-                            <div class="display-table-cell">
-                                <div class="text">
-                                    <h6>Portfolio</h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
+			<?php
+			}
+		}
+		?>
         </section>
 <?php
 get_footer(); 
